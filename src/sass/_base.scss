@@ -1,0 +1,115 @@
+@import "./variables";
+html, body {
+  height: 100%;
+  // font-size: .12rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  margin: 0;
+  background-color: $bg-app;
+  user-select: text;
+}
+
+p, h1, h2, h3, h4, h5, h6, p, ul, li, dl, dt, dd, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+ul, li, ol {
+  list-style: none;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+.el-left {
+  float: left;
+}
+
+.el-right {
+  float: right;
+}
+
+.el-center {
+  text-align: center;
+}
+
+#app {
+  height: 100%;
+}
+
+.rotate-container {
+  position: relative;
+  overflow: hidden;
+  .rotate {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 0.2rem;
+    width: 0.8rem;
+    transform: rotate(45deg);
+    transform-origin: 50% 100%;
+    box-sizing: border-box;
+    background-color: #e4e4e4;
+    font-weight: bolder;
+    font-size: 0.13rem;
+    text-align: center;
+    color: #898989;
+  }
+}
+
+.font-number {
+  font-family: $body-font-number;
+}
+
+.picker-item {
+  font-family: $body-font-number;
+}
+
+.list-box-base {
+  .mint-cell {
+    min-height: .4rem;
+  }
+  .mint-cell-wrapper {
+    padding: 0 .15rem;
+    border-bottom: 1px dashed #ddd;
+    background: none;
+  }
+  .mint-cell-text, .mint-cell-value {
+    color: $black-lighter;
+    font-size: $font-size-middle;
+  }
+  .mint-cell-value {
+    font-weight: 600;
+  }
+}
+
+.timedw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: .44rem;
+  padding: 0 .16rem;
+  color: #fff;
+  background-color: #3BB1EF;
+  span {
+    height: .35rem;
+    line-height: .35rem;
+    color: $gray-dark;
+    b {
+      font-size: .14rem;
+      color: #fff;
+      font-weight: 400;
+    }
+  }
+  i {
+    width: .07rem;
+    height: .04rem;
+    color: #fff;
+    margin-left: .1rem;
+    font-size: .1rem;
+  }
+}

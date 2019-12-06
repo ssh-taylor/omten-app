@@ -1,0 +1,65 @@
+{
+  "id": "1548932",
+  "name": "omten",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "145440",
+      "name": "通讯录",
+      "font_class": "tongxunlu",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "761222",
+      "name": "我的审批",
+      "font_class": "icon",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "764903",
+      "name": "我的资料",
+      "font_class": "mydata",
+      "unicode": "e67c",
+      "unicode_decimal": 59004
+    },
+    {
+      "icon_id": "1915197",
+      "name": "日报工时",
+      "font_class": "icon-test",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "2569878",
+      "name": "消息",
+      "font_class": "xiaoxi",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    },
+    {
+      "icon_id": "4572470",
+      "name": "我的",
+      "font_class": "sousuo",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "6865384",
+      "name": "工时核价",
+      "font_class": "gongshihejia-",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "8081367",
+      "name": "功能",
+      "font_class": "iconfront-",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    }
+  ]
+}
