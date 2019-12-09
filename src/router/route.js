@@ -25,7 +25,7 @@
             },
             {
                 path:'/mine',
-                name:'home_main',
+                name:'home_mine',
                 component:r=>require.ensure([],()=>r(require('../apps/home/mine.vue')),'omten_home'),
                 meta:{title:'欧美特应用'}
             }

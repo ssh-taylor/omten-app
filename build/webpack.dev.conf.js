@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-06 11:20:39
+ * @LastEditTime: 2019-12-09 17:48:17
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \omt-app\build\webpack.dev.conf.js
+ */
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -42,7 +50,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    }
+    },
+    disableHostCheck: true,
   },
   plugins: [
     new webpack.DefinePlugin({
