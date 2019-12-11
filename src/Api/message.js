@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-06 18:28:36
+ * @LastEditTime: 2019-12-11 16:35:06
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \omt-app\src\Api\message.js
+ */
 import request from "@/utils/request";
 //获取消息分页列表
 export function getMessageList(pagination, data, queryJson) {
@@ -35,5 +43,17 @@ export function deleteformMessages(keyValue) {
     url: "/learun/immsg/deleteform",
     method: "get",
     params: keyValue
+  });
+}
+//获取联系人列表
+export function getcontactlist(pagination,UserId) {
+  return request({
+    url: "/learun/immsg/getcontactlist",
+    method: "get",
+    params: {
+      pagination,
+      UserId,
+      queryJson:''
+    }
   });
 }

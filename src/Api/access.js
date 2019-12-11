@@ -1,5 +1,13 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-06 18:28:36
+ * @LastEditTime: 2019-12-10 18:37:40
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \omt-app\src\Api\access.js
+ */
 import request from "@/utils/request";
-import settings from "@/settings";
+import settings from "@/utils/settings";
 //设置人员数据权限
 export function saveuseraccess(schemeid, keyValue, userid) {
   return request({

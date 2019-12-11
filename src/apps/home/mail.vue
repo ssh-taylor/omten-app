@@ -21,15 +21,14 @@
 
 <script>
 import header from '../commons/header'
-import { IndexList, IndexSection,cell,Search } from "mint-ui";
-import ctiy from "../../util/ctiy.json";
+import { IndexList, IndexSection,cell,} from "mint-ui";
+import ctiy from "../../utils/ctiy.json";
 export default {
   components: {
     MtIndexList: IndexList,
     MtIndexSection: IndexSection,
     MtCell:cell,
     MtHeader:header,
-    MtSearch:Search
   },
   data() {
     return {

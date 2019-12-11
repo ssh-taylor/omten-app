@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-04 14:34:52
- * @LastEditTime: 2019-12-09 15:37:13
+ * @LastEditTime: 2019-12-11 16:50:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\home\message.vue
@@ -9,7 +9,7 @@
 <template>
   <div class="page-message">
     <mt-header :title="title"></mt-header>
-    <div class="container">
+    <div class="container" @click="handleClose">
       <div class="message-item-box">
         <div class="message-left">
           <img src="../../assets/logo.png" alt="">
@@ -29,6 +29,7 @@
 
 <script>
 import header from '../commons/header'
+import{getcontactlist} from '../../Api/message' 
 export default {
   components: {
     MtHeader:header,
@@ -39,7 +40,12 @@ export default {
     }
   },
   methods: {
-    handleClose() {}
+    init(){
+
+    },
+    handleClose() {
+      console.log(this.$store)
+    }
   }
 };
 </script>

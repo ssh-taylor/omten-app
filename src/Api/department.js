@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import settings from "../settings";
+import settings from "@/utils/settings";
 // 获取部门详细列表
 export function getDepartment() {
   return request({

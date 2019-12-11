@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import settings from "@/settings";
+import settings from "@/utils/settings";
 //保存接口
 export function interfacesave(Keyvalue, entity) {
   return request({

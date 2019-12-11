@@ -1,8 +1,16 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-04 14:07:46
+ * @LastEditTime: 2019-12-10 18:43:50
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \omt-app\src\utils\request.js
+ */
 import axios from 'axios'
 import Qs from 'qs'
-import { Notification } from 'element-ui'
+import {Popup} from 'mint-ui'
 import store from '@/store/store'
-import settings from '@/settings'
+import settings from '@/utils/settings'
 import router from '@/router'
 
 const service = axios.create({
@@ -40,17 +48,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     if (response.status !== 200) {
-      Notification({ message: '接口地址错误:错误码：' + response.status + '消息:' + response.statusText, title: '错误', type: 'error', duration: 5000 })
+      Popup({ message: '接口地址错误:错误码：' + response.status + '消息:' + response.statusText, title: '错误', type: 'error', duration: 5000 })
       return Promise.reject(response.statusText)
     }
     const res = response.data
     if (!res.code) {
-      Notification({ message: '服务器返回数据不正确', title: '错误', type: 'error', duration: 5000 })
+      Popup({ message: '服务器返回数据不正确', title: '错误', type: 'error', duration: 5000 })
       return Promise.reject(response.statusText)
     }
     console.log('response===============>', res)
     if (res.code !== 200) {
-      Notification({ title: '提示', message: res.info || 'error', type: 'warning', duration: 5000 })
+      Popup({ title: '提示', message: res.info || 'error', type: 'warning', duration: 5000 })
       if (res.code === 400 || res.code === 500) {
         return Promise.reject(res.info)
       }
@@ -64,7 +72,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    Notification({ title: '错误', message: error.message || 'error', type: 'error', duration: 5000 })
+    Popup({ title: '错误', message: error.message || 'error', type: 'error', duration: 5000 })
     return Promise.reject(error)
   }
 )

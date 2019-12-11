@@ -52,13 +52,26 @@
         <p>设置</p>
         <span class="rightarrow icon iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-"></span>
       </div>
+      <div class="nume-item loginout">
+        <mt-button class="button" type="danger" @click.native="loginout">退出登录</mt-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Button } from 'mint-ui';
 export default {
-
+  components:{
+    MtButton:Button
+  },
+  methods:{
+    loginout(){
+      this.$store.dispatch('LoginOut')
+      this.$router.push({path:'/'})
+      
+    }
+  }
 }
 </script>
 
@@ -184,6 +197,15 @@ export default {
     }
     .nume-next{
       margin-top: .1rem;
+    }
+    .loginout{
+      margin-top: .3rem!important;
+      background: none!important;
+      .button{
+        width: 80%;
+        height: .4rem;
+        margin: 0 auto;
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import settings from "@/settings";
+import settings from "@/utils/settings";
 //获取角色列表
 export function RoleList() {
   return request({

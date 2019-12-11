@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 import md5 from "js-md5";
-import settings from "../settings";
+import settings from "@/utils/settings";
 // 用户登陆
 export function login(data) {
   const postdata = {

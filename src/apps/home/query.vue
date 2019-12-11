@@ -2,17 +2,7 @@
   <div class="page-query">
     <mt-header :title="title"></mt-header>
     <div class="container">
-      <div class="applymodule">
-        <div class="applyTitle">企业应用</div>
-        <div class="applymenu">
-          <div class="apply-box">
-            <div class="apply-item">
-
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="moduleMenu">
+      <div style="margin-top:.1rem;" class="moduleMenu">
         <div class="menuTitle">系统功能</div>
         <div class="module-box">
           <div class="moduleItem">
@@ -76,22 +66,10 @@ export default {
   height: calc(100% - .4rem);
   font-size: .16rem;
   .container{
-    .applymodule{
-      background: #fff;
-      margin-bottom: .1rem;
-      padding: .1rem;
-      .applyTitle{
-        border: 1px solid #eee;
-        font-size: .15rem;
-        color: #444;
-        line-height: .3rem;
-        padding-left: .05rem;
-      }
-    }
-    .moduleMenu{
+    .moduleMenu,.applymodule{
       background-color:#fff;
       padding: .1rem 0;
-      .menuTitle{
+      .menuTitle,.applyTitle{
         margin:0 .1rem;
         font-size: .15rem;
         color: #444;
@@ -99,12 +77,12 @@ export default {
         padding-left: .05rem;
         border: 1px solid #eee;
       }
-      .module-box{
+      .module-box,.apply-box{
         display: flex;
         flex-wrap: wrap;
         margin: 0 .1rem;
         border-left: 1px solid #eee;
-        .moduleItem{
+        .moduleItem,.apply-item{
           width: calc(100% / 3 - 1px);
           height: .6rem;
           text-align: center;
