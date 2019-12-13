@@ -1,18 +1,20 @@
 /*
  * @Author: your name
  * @Date: 2019-12-10 17:16:39
- * @LastEditTime: 2019-12-10 18:29:45
+ * @LastEditTime: 2019-12-12 18:17:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\store\module\app.js
  */
 import { getToken,setToken} from '@/utils/auth'
-import {getInfo} from '@/Api/user'
-
+import {getInfo,getuserlist} from '@/Api/user'
+import {getmodulelist} from '@/Api/systemmodule'
 const app ={
     state:{
        token:getToken(),
        userInfo:{},
+       userLists: [],
+       menus:[]
     },
     mutations:{
         USERINFO(state,uinfo){
@@ -22,7 +24,13 @@ const app ={
         },
         SETTOKEN(state){
             state.token = ''
-        }
+        },
+        SETUSERLIST (state, uList) {
+            state.userLists = uList
+        },
+        SETMENU (state, umenu) {
+            state.menus = umenu
+        },
     },
     actions:{
         LoginOut({commit}){
@@ -35,7 +43,20 @@ const app ={
             return getInfo().then(data=>{
                 commit('USERINFO',data.baseinfo)
             })
-        }
+        },
+        SetUserList ({ commit }) {
+            return getuserlist('','').then(data => {
+              let uList = data
+              commit('SETUSERLIST', uList)
+            })
+        },
+        SetMenu ({ commit }) {
+            return getmodulelist().then(data => {
+              let pmenu = data.wflist
+              commit('SETMENU', pmenu)
+            })
+        },
+
     }
 }
 

@@ -68,8 +68,7 @@ export default {
   methods:{
     loginout(){
       this.$store.dispatch('LoginOut')
-      this.$router.push({path:'/'})
-      
+      this.$router.replace({path:'/login'})
     }
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-06 13:33:12
- * @LastEditTime: 2019-12-11 10:09:22
+ * @LastEditTime: 2019-12-11 19:36:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\router\route.js
@@ -36,11 +36,6 @@
                 path:'/search',
                 name:'home_search',
                 component:r=>require.ensure([],()=>r(require('../apps/home/search.vue')),'omten_home')
-            },
-            {
-                path:'/code',
-                name:'home_code',
-                component:r=>require.ensure([],()=>r(require('../apps/home/code.vue')),'omten_home')
             }
         ]
      },
@@ -48,6 +43,11 @@
         path:'/login',
         name:'omten_home',
         component:r=>require.ensure([],()=>r(require('../apps/commons/Login.vue')),'omten_home'),
+     },
+     {
+        path:'/chat',
+        name:'message_chat',
+        component:r=>require.ensure([],()=>r(require('../apps/message/chat.vue')),'omten_message'),
      },
  ]
     

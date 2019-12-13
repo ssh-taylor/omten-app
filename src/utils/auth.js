@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-04 13:55:36
- * @LastEditTime: 2019-12-11 16:12:47
+ * @LastEditTime: 2019-12-12 13:41:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\utils\auth.js
@@ -19,3 +19,4 @@ export function setToken(token){
 export function removeToken(){
     return Cookies.remove(TokenKey)
 }
+  

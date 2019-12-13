@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-06 18:28:36
- * @LastEditTime: 2019-12-11 16:35:06
- * @LastEditors: your name
+ * @LastEditTime: 2019-12-13 15:35:58
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\Api\message.js
  */
@@ -51,7 +51,7 @@ export function getcontactlist(pagination,UserId) {
     url: "/learun/immsg/getcontactlist",
     method: "get",
     params: {
-      pagination,
+      pagination:JSON.stringify(pagination),
       UserId,
       queryJson:''
     }

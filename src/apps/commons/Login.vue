@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-10 19:41:36
- * @LastEditTime: 2019-12-11 18:23:41
+ * @LastEditTime: 2019-12-13 19:32:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\commons\Login.vue
@@ -54,11 +54,13 @@ export default {
 methods:{
   login(){
     login(this.userInfo).then(res=>{
-      if(this.checked === true){
         this.$store.dispatch('SaveUserInfo',res.baseinfo)
-      }
-      console.log(this.$store)
-      this.$router.push({path:'/message'})
+    }).then(msg => {
+          this.$store.dispatch('SetMenu')
+      }).then(meg=>{
+      this.$store.dispatch('SetUserList').then(msg=>{
+        this.$router.replace({path:'/'})
+      })
     })
   }
 }

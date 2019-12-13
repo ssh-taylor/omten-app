@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-04 14:07:46
- * @LastEditTime: 2019-12-10 18:43:50
+ * @LastEditTime: 2019-12-12 17:31:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\utils\request.js
@@ -48,17 +48,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     if (response.status !== 200) {
-      Popup({ message: '接口地址错误:错误码：' + response.status + '消息:' + response.statusText, title: '错误', type: 'error', duration: 5000 })
+      alert({ message: '接口地址错误:错误码：' + response.status + '消息:' + response.statusText, title: '错误', type: 'error', duration: 5000 })
       return Promise.reject(response.statusText)
     }
     const res = response.data
     if (!res.code) {
-      Popup({ message: '服务器返回数据不正确', title: '错误', type: 'error', duration: 5000 })
+      alert({ message: '服务器返回数据不正确', title: '错误', type: 'error', duration: 5000 })
       return Promise.reject(response.statusText)
     }
     console.log('response===============>', res)
     if (res.code !== 200) {
-      Popup({ title: '提示', message: res.info || 'error', type: 'warning', duration: 5000 })
+      alert({ title: '提示', message: res.info || 'error', type: 'warning', duration: 5000 })
       if (res.code === 400 || res.code === 500) {
         return Promise.reject(res.info)
       }
@@ -72,7 +72,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    Popup({ title: '错误', message: error.message || 'error', type: 'error', duration: 5000 })
+    alert({ title: '错误', message: error.message || 'error', type: 'error', duration: 5000 })
     return Promise.reject(error)
   }
 )

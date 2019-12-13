@@ -1,13 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-04 17:36:17
- * @LastEditTime: 2019-12-11 19:09:53
+ * @LastEditTime: 2019-12-12 14:00:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\home\index.vue
  -->
 <script>
 import appFooter from "../commons/footer";
+import { getuserlistss} from '@/Api/user'
 export default {
   template:
     '<div style="height:100%"><router-view></router-view><app-footer/></div>',
@@ -20,7 +21,6 @@ export default {
   methods: {
     init() {
       let token = this.$store.getters.token;
-      console.log(this.$store.getters.token,111);
       if (token === "") {
         this.$router.push({ path: "/login" });
       } else if (token !== "") {

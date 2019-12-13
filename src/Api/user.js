@@ -36,7 +36,7 @@ export function getInfo() {
   });
 }
 //查询用户信息列表
-export function getuserlist(cpid, dpid, keyword) {
+export function getuserlist(dpid, keyword) {
   return request({
     url: "/learun/adms/user/query",
     method: "get",
@@ -52,9 +52,7 @@ export function getuserlistss() {
   return request({
     url: "/learun/adms/user/list",
     method: "get",
-    params: {
-      Keyvalue: settings.companyid
-    }
+    params: settings.companyid
   });
 }
 // 上传头像
