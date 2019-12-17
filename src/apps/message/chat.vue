@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-12 16:01:32
- * @LastEditTime: 2019-12-13 19:35:01
+ * @LastEditTime: 2019-12-17 18:10:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\message\chat.vue
@@ -15,20 +15,35 @@
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="content-box">
-      <div class="content-message">
-        <div class="messsage-item" v-for="(item,index) in messageList.rows" :key="index">
-          <div class="picture left">
-            <img :src="src" alt="" />
+      <mt-loadmore
+        :top-method="loadMore"
+        @bottom-status-change="handleBottomChange"
+        :bottom-all-loaded="allLoaded"
+        ref="loadmore"
+        :auto-fill="false"
+        class="content-message"
+      >
+        <div class="messsage-item" v-for="(item,index) in messageList" :key="index">
+          <div
+            class="picture"
+            :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left':'right'"
+          >
+            <img :src="item.F_OtherUserId === userInfo.F_OtherUserId?RecvHeadIcon:sendHeadIcon" alt />
           </div>
-          <p class="message left-text">{{item.F_Content}}</p>
+          <p
+            class="message"
+            :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left-text':'right-text'"
+          >{{item.F_Content}}</p>
         </div>
-        <!-- <div class="messsage-item">
-          <div class="picture right">
+      </mt-loadmore>
+      <!-- <div class="content-message">
+        <div class="messsage-item" v-for="(item,index) in messageList" :key="index">
+          <div class="picture" :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left':'right'">
             <img :src="src" alt="" />
           </div>
-          <p class="message right-text">在的</p>
-        </div> -->
-      </div>
+          <p class="message" :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left-text':'right-text'">{{item.F_Content}}</p>
+        </div>
+      </div>-->
       <div class="textEditing">
         <div class="innerText">
           <input v-model="value" type="text" />
@@ -42,46 +57,75 @@
 </template>
 
 <script>
-import { Header, button } from "mint-ui";
-import { getMessageList } from "@/Api/message";
+import { Header, button, Loadmore } from "mint-ui";
+import { getMessageList, sendMessage } from "@/Api/message";
 export default {
   components: {
     MtHeader: Header,
-    MtButton: button
+    MtButton: button,
+    MtLoadmore: Loadmore
   },
   data() {
     return {
       userInfo: {},
       rows: 10,
-      messageList:[],
+      messageList: [],
       page: 1,
+      allLoaded: false, //false：加载未完成,可以继续加载；true：加载完成，不能继续加载
+      bottomStatus: "",
+      loading: false,
       value: "",
-      src:'http://192.168.1.200:8002/learun/adms/user/img?token2b58fd98-7533-479f-8a55-d26d86d8cb6f&loginMark=erpclient123456789&data1fc0e985-1373-4adc-b3a7-f68b89093f1c.jpg'
+      src:"http://192.168.1.200:8002/learun/adms/user/img?token2b58fd98-7533-479f-8a55-d26d86d8cb6f&loginMark=erpclient123456789&data1fc0e985-1373-4adc-b3a7-f68b89093f1c.jpg",
+      sendHeadIcon:'',
+      RecvHeadIcon:''
     };
   },
   mounted() {
     this.userInfo = this.$route.query.item;
-    this.init();
+    this.sendHeadIcon = this.$store.getters.userico
+    this.RecvHeadIcon = this.$route.query.item.F_HeadIcon
+    this.loadMore();
   },
   methods: {
-    init() {
+    loadMore() {
+      this.allLoaded = true;
       let item = {
         sendUserId: this.userInfo.F_MyUserId,
         recvUserId: this.userInfo.F_OtherUserId,
         keyword: ""
       };
       let pagination = {
-        row: this.rows,
+        rows: this.rows,
         page: this.page,
         sord: "DESC",
         sidx: "F_CreateDate"
       };
       getMessageList(pagination, item, {}).then(data => {
-        this.messageList = data
+        if (data.rows.length <= 0) {
+          console.log(111111);
+          this.allLoaded = false;
+          this.$refs.loadmore.onBottomLoaded();
+        } else {
+          data.rows.forEach((item, index) => {
+            this.messageList.unshift(item);
+              this.allLoaded = false;
+              this.$refs.loadmore.onBottomLoaded();
+          });
+        }
       });
+      this.page += 1;
     },
     sender() {
-      console.log(this.value);
+      let message = {
+        F_SendUserId: this.userInfo.F_MyUserId,
+        F_RecvUserId: this.userInfo.F_OtherUserId,
+        F_Content: this.value,
+        F_IsRead: 1
+      };
+      sendMessage(message).then(data => {});
+    },
+    handleBottomChange(status) {
+      this.bottomStatus = status;
     }
   }
 };
@@ -103,60 +147,71 @@ export default {
     height: calc(100% - 0.4rem);
     .content-message {
       height: calc(100% - 0.41rem);
-      padding: .1rem .2rem 0;
+      padding: 0.1rem 0.2rem 0;
       box-sizing: border-box;
+      overflow-y: scroll;
     }
-    .messsage-item{
+    .messsage-item {
       // border: 1px solid red;
-      height: .5rem;
+      height: 0.5rem;
       clear: both;
-      .picture{
-        width: .4rem;
-        height: .4rem;  
-        img{
+      .picture {
+        width: 0.4rem;
+        height: 0.4rem;
+        img {
           width: 100%;
           height: 100%;
-          border-radius:.05rem; 
+          border-radius: 0.05rem;
         }
       }
-      .message{
+      .message {
         background: #fff;
-        display: inline;
-        padding: .05rem;
+        display: inline-block;
+        padding: 0.05rem;
+        max-width: calc(100% - 0.4rem);
+        word-wrap: break-word;
+        word-break: break-all;
+        // overflow: hidden;
+        margin-bottom: 0.1rem;
       }
-      .left,.left-text{
+      .left,
+      .left-text {
         float: left;
       }
-      .left-text{
+      .left-text {
         position: relative;
-        margin-right: .1rem;
+        margin-left: 0.1rem;
         max-width: 80%;
       }
-      .left-text::before{
+      .left-text::before {
         width: 0;
         height: 0;
-        content:'';
+        content: "";
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
         border-right: 5px solid #fff;
         position: absolute;
-        top: 50%;
+        top: 0.1rem;
         left: -5px;
       }
-      .right,.right-text{
+      .right,
+      .right-text {
         float: right;
-        margin-left: .1rem;
-        position: relative;
       }
-      .right-text::after{
-         width: 0;
+      .right-text {
+        margin-right: 0.1rem;
+        position: relative;
+        max-width: 80%;
+      }
+      .right-text::after {
+        width: 0;
         height: 0;
-        content:'';
+        content: "";
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
         border-left: 5px solid #fff;
         position: absolute;
-        top: 50%;
+        top: 0.1rem;
         right: -5px;
       }
     }

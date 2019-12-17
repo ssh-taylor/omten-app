@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-04 17:36:17
- * @LastEditTime: 2019-12-12 14:00:04
+ * @LastEditTime: 2019-12-17 17:49:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\home\index.vue

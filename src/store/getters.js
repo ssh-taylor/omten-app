@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-10 17:48:51
- * @LastEditTime: 2019-12-12 18:28:58
+ * @LastEditTime: 2019-12-17 17:05:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\store\getters.js
@@ -19,7 +19,8 @@ const getters ={
             '&loginMark=' +
             settings.loginMark +
             '&data=' +
-            state.app.userInfo.userId
+            state.app.userInfo.userId +
+            state.app.userInfo.headIcon
         )
     },
     getmenus: state => {

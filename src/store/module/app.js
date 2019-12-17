@@ -1,14 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2019-12-10 17:16:39
- * @LastEditTime: 2019-12-12 18:17:14
+ * @LastEditTime: 2019-12-17 16:55:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\store\module\app.js
  */
 import { getToken,setToken} from '@/utils/auth'
-import {getInfo,getuserlist} from '@/Api/user'
+import {getInfo,getuserlist,getImg} from '@/Api/user'
 import {getmodulelist} from '@/Api/systemmodule'
+import settings from '../../utils/settings'
 const app ={
     state:{
        token:getToken(),
