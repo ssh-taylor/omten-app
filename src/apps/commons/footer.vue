@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-12-06 10:08:14
+ * @LastEditTime : 2019-12-19 15:06:37
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \omt-app\src\apps\commons\footer.vue
+ -->
 <template>
   <div id="tabber">
     <router-link class="tablebar-item" :class="{'active':selected.name==='home_message'}" :to="{path:'/message'}">
@@ -31,6 +39,7 @@ export default {
   watch:{
     '$route'(newval){
       this.selected = newval
+      console.log(newval)
     }
   }
 };

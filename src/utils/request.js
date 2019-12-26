@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2019-12-04 14:07:46
- * @LastEditTime: 2019-12-12 17:31:10
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-18 15:07:19
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\utils\request.js
  */
 import axios from 'axios'
 import Qs from 'qs'
-import {Popup} from 'mint-ui'
+import {Toast} from 'mint-ui'
 import store from '@/store/store'
 import settings from '@/utils/settings'
 import router from '@/router'
@@ -48,17 +48,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     if (response.status !== 200) {
-      alert({ message: '接口地址错误:错误码：' + response.status + '消息:' + response.statusText, title: '错误', type: 'error', duration: 5000 })
+      Toast({ message: '接口地址错误:错误码：' + response.status + '消息:' + response.statusText, title: '错误', type: 'error', duration: 5000,})
       return Promise.reject(response.statusText)
     }
     const res = response.data
     if (!res.code) {
-      alert({ message: '服务器返回数据不正确', title: '错误', type: 'error', duration: 5000 })
+      Toast({ message: '服务器返回数据不正确', title: '错误', type: 'error', duration: 5000, })
       return Promise.reject(response.statusText)
     }
     console.log('response===============>', res)
     if (res.code !== 200) {
-      alert({ title: '提示', message: res.info || 'error', type: 'warning', duration: 5000 })
+      Toast({ title: '提示', message: res.info || 'error', type: 'warning', duration: 5000,})
       if (res.code === 400 || res.code === 500) {
         return Promise.reject(res.info)
       }
@@ -72,7 +72,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    alert({ title: '错误', message: error.message || 'error', type: 'error', duration: 5000 })
+    Toast({ title: '错误', message: error.message || 'error', type: 'error', duration: 5000,})
     return Promise.reject(error)
   }
 )

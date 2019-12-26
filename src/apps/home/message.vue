@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-04 14:34:52
- * @LastEditTime: 2019-12-17 09:55:45
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-18 19:03:59
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\home\message.vue
  -->
@@ -19,7 +19,7 @@
         <div class="message-item-box" @click="skip(item)" v-for="(item,index) in messageList" :key="index">
           <div class="message-left">
             <img :src="item.F_HeadIcon" alt />
-            <span v-if="item.F_IsRead === 2" class="Bubble"></span>
+            <span v-if="item.F_IsRead === 1" class="Bubble"></span>
           </div>
           <div class="message-middle">
             <span>{{item.F_RealName}}</span>
@@ -39,7 +39,7 @@ import header from "../commons/header";
 import { getcontactlist } from "../../Api/message";
 import { getuserlistss} from "@/Api/user";
 import { Loadmore } from "mint-ui";
-import settings from '@/utils/settings'
+import {getImg,session} from '../../utils/util'
 export default {
   components: {
     MtHeader: header,
@@ -69,7 +69,7 @@ export default {
       };
       getcontactlist(pagination, userId).then(data => {
         data.forEach(item => {
-           item['F_HeadIcon'] = this.geturl(item.F_OtherUserId)
+           item['F_HeadIcon'] = getImg(item)
           userList.forEach(i => {
             if (item.F_OtherUserId === i.F_UserId) {
               item["F_RealName"] = i.F_RealName;
@@ -88,12 +88,9 @@ export default {
       this.init();
     },
     skip(val) {
-      this.$router.push({ path: "/chat", query: { item:val} });
+      session.setSession('userInfo',val)
+      this.$router.push({path: "/ltxq"});
     },
-    geturl(userId){
-        let url = settings.apiUrl+'/learun/adms/user/img?token'+this.$store.getters.token+'&loginMark='+settings.loginMark+'&data'+userId
-         return url
-    }
   }
 };
 </script>

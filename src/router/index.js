@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-06 11:20:39
- * @LastEditTime: 2019-12-11 19:29:54
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-18 20:07:56
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\router\index.js
  */
@@ -16,7 +16,7 @@ import store from '@/store/store'
    return routerPush.call(this, location).catch(error=> error)
  }
 const router = new Router({
-  mode:'history',
+  // mode:'history',
   routes:route,
 })
 

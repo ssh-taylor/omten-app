@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-10 19:41:36
- * @LastEditTime: 2019-12-17 17:07:53
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-24 10:38:26
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\commons\Login.vue
  -->
@@ -83,7 +83,6 @@ methods:{
      left: calc(50% - 25%);
      img{
        width: 100%;
-       height: 100%;
      }
     }
   }

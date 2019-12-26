@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-06 13:33:12
- * @LastEditTime: 2019-12-11 19:36:04
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-25 11:19:31
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\router\route.js
  */
@@ -45,10 +45,49 @@
         component:r=>require.ensure([],()=>r(require('../apps/commons/Login.vue')),'omten_home'),
      },
      {
-        path:'/chat',
-        name:'message_chat',
-        component:r=>require.ensure([],()=>r(require('../apps/message/chat.vue')),'omten_message'),
+         path:'/ltxq',
+         name:'omten_ltxq',
+         component:{template:'<router-view></router-view>'},
+         children:[
+            {
+                path:'/',
+                name:'message_chat',
+                component:r=>require.ensure([],()=>r(require('../apps/message/chat.vue')),'omten_message'),
+             },
+             {
+                path:'/chatsetting',
+                name:'message_chatsetting',
+                component:r=>require.ensure([],()=>r(require('../apps/message/chatSetting.vue')),'omten_message'),
+             },
+             {
+                path:'/userinfo',
+                name:'message_userinfo',
+                component:r=>require.ensure([],()=>r(require('../apps/message/userInfo.vue')),'omten_message'),
+             },
+         ]
      },
+     {
+        path:'/forms',
+        name:'omten_form',
+        component:{template:'<router-view></router-view>'},
+        children:[
+           {
+               path:'/formlist',
+               name:'query_formlist',
+               component:r=>require.ensure([],()=>r(require('../apps/query/formlist.vue')),'omten_query'),
+            },
+            {
+               path:'/forms',
+               name:'query_forms',
+               component:r=>require.ensure([],()=>r(require('../apps/query/forms.vue')),'omten_query'),
+            },
+            {
+               path:'/editform',
+               name:'query_editform',
+               component:r=>require.ensure([],()=>r(require('../apps/query/editform.vue')),'omten_query'),
+            },
+        ]
+    }
  ]
     
 export default route

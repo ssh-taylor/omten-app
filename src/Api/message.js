@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-06 18:28:36
- * @LastEditTime: 2019-12-13 15:35:58
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-18 18:09:56
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\Api\message.js
  */
@@ -56,4 +56,20 @@ export function getcontactlist(pagination,UserId) {
       queryJson:''
     }
   });
+}
+// 保存联系人
+export function savecontact(data){
+  return request({
+    url:'/learun/immsg/savecontact',
+    method:'get',
+    params:data
+  })
+}
+// 更改联系人未读状态
+export function savereadstatus(data){
+  return request({
+    url:'/learun/immsg/savereadstatus',
+    method:'get',
+    params:data
+  })
 }

@@ -1,15 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2019-12-10 17:16:39
- * @LastEditTime: 2019-12-17 16:55:16
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-26 17:38:13
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\store\module\app.js
  */
 import { getToken,setToken} from '@/utils/auth'
 import {getInfo,getuserlist,getImg} from '@/Api/user'
 import {getmodulelist} from '@/Api/systemmodule'
-import settings from '../../utils/settings'
 const app ={
     state:{
        token:getToken(),
@@ -53,7 +52,8 @@ const app ={
         },
         SetMenu ({ commit }) {
             return getmodulelist().then(data => {
-              let pmenu = data.wflist
+              let pmenu = data
+              console
               commit('SETMENU', pmenu)
             })
         },

@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-04 15:28:02
- * @LastEditTime: 2019-12-13 10:41:47
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-18 17:59:41
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\home\mail.vue
  -->
@@ -23,7 +23,7 @@
       <div class="search-content">
         <ul>
           <li v-for="item in value" @click="linkToRzmx(item)">
-            <div class="picture"><img src="../../assets/logo.png" alt=""></div>
+            <div class="picture"><img :src="item.headIcon" alt=""></div>
             <p>{{item.F_RealName}}</p>
           </li>
         </ul>
@@ -43,7 +43,7 @@
 <script>
 import header from "../commons/header";
 import { IndexList, IndexSection, cell } from "mint-ui";
-import { getPy } from "../../utils/util";
+import { getPy, getImg,session} from "../../utils/util";
 export default {
   components: {
     MtIndexList: IndexList,
@@ -126,12 +126,14 @@ export default {
       this.cityArr = this.$store.getters.userLists;
       let arr = [];
       this.cityArr.forEach(item => {
+        item.headIcon = getImg(item)
         let letter = getPy(item.F_RealName.slice(0, 1));
         this.totalQyList[letter].push(item);
       });
     },
     linkToRzmx(item) {
-      // console.log(item);
+      session.setSession('userInfo',item)
+      this.$router.push({path:'/userinfo'})
     },
   }
 };

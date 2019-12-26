@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-12 16:01:32
- * @LastEditTime: 2019-12-17 18:10:48
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-18 11:31:10
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\message\chat.vue
  -->
@@ -12,7 +12,7 @@
       <router-link to="/" slot="left">
         <mt-button class="iconfont" icon="back"></mt-button>
       </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
+      <mt-button icon="more" slot="right" @click.native="pageChatMessage"></mt-button>
     </mt-header>
     <div class="content-box">
       <mt-loadmore
@@ -25,6 +25,10 @@
       >
         <div class="messsage-item" v-for="(item,index) in messageList" :key="index">
           <div
+            v-if="item.IntervalF_Date > 180"
+            class="message-date"
+          >{{item.F_CreateDate.substring(11,16)}}</div>
+          <div
             class="picture"
             :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left':'right'"
           >
@@ -36,14 +40,6 @@
           >{{item.F_Content}}</p>
         </div>
       </mt-loadmore>
-      <!-- <div class="content-message">
-        <div class="messsage-item" v-for="(item,index) in messageList" :key="index">
-          <div class="picture" :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left':'right'">
-            <img :src="src" alt="" />
-          </div>
-          <p class="message" :class="item.F_OtherUserId === userInfo.F_OtherUserId?'left-text':'right-text'">{{item.F_Content}}</p>
-        </div>
-      </div>-->
       <div class="textEditing">
         <div class="innerText">
           <input v-model="value" type="text" />
@@ -57,8 +53,9 @@
 </template>
 
 <script>
-import { Header, button, Loadmore } from "mint-ui";
-import { getMessageList, sendMessage } from "@/Api/message";
+import { Header, button, Loadmore, Toast } from "mint-ui";
+import { getMessageList, sendMessage} from "@/Api/message";
+import { time,session } from "../../utils/util";
 export default {
   components: {
     MtHeader: Header,
@@ -68,22 +65,21 @@ export default {
   data() {
     return {
       userInfo: {},
-      rows: 10,
+      rows: 11,
       messageList: [],
       page: 1,
       allLoaded: false, //false：加载未完成,可以继续加载；true：加载完成，不能继续加载
       bottomStatus: "",
       loading: false,
       value: "",
-      src:"http://192.168.1.200:8002/learun/adms/user/img?token2b58fd98-7533-479f-8a55-d26d86d8cb6f&loginMark=erpclient123456789&data1fc0e985-1373-4adc-b3a7-f68b89093f1c.jpg",
-      sendHeadIcon:'',
-      RecvHeadIcon:''
+      sendHeadIcon: "",
+      RecvHeadIcon: ""
     };
   },
   mounted() {
-    this.userInfo = this.$route.query.item;
-    this.sendHeadIcon = this.$store.getters.userico
-    this.RecvHeadIcon = this.$route.query.item.F_HeadIcon
+    this.userInfo = session.getSession('userInfo');
+    this.sendHeadIcon = this.$store.getters.userico;
+    this.RecvHeadIcon = this.userInfo.F_HeadIcon;
     this.loadMore();
   },
   methods: {
@@ -102,18 +98,19 @@ export default {
       };
       getMessageList(pagination, item, {}).then(data => {
         if (data.rows.length <= 0) {
-          console.log(111111);
           this.allLoaded = false;
           this.$refs.loadmore.onBottomLoaded();
         } else {
           data.rows.forEach((item, index) => {
+            
             this.messageList.unshift(item);
-              this.allLoaded = false;
-              this.$refs.loadmore.onBottomLoaded();
+            this.allLoaded = false;
+            this.$refs.loadmore.onBottomLoaded();
           });
         }
       });
       this.page += 1;
+      this.scrollToBottom();
     },
     sender() {
       let message = {
@@ -122,10 +119,39 @@ export default {
         F_Content: this.value,
         F_IsRead: 1
       };
-      sendMessage(message).then(data => {});
+      if (message.F_Content !== "") {
+        sendMessage(message).then(data => {
+          let dataItem = {
+            F_Content: this.value,
+            F_CreateDate: time(),
+            F_RecvUserId: this.userInfo.F_OtherUserId,
+            F_RecvUserName: this.userInfo.F_RealName,
+            F_SendUserId: this.userInfo.F_MyUserId,
+            IntervalF_Date:(Date.parse(time()) - Date.parse(this.messageList[this.messageList.length - 1].F_CreateDate)) /1000
+          };
+          this.messageList.push(dataItem);
+          this.value = "";
+          this.scrollToBottom()
+        });
+      } else {
+        Toast({
+          message: "请输入内容",
+          position: "midden",
+          duration: 1000
+        });
+      }
     },
     handleBottomChange(status) {
       this.bottomStatus = status;
+    },
+    scrollToBottom() {
+      this.$nextTick(() => {
+        let contanier = this.$el.querySelector(".mint-loadmore");
+        contanier.scrollTop = contanier.scrollHeight;
+      });
+    },
+    pageChatMessage(){
+      this.$router.push({path:'/chatsetting'})
     }
   }
 };
@@ -150,11 +176,20 @@ export default {
       padding: 0.1rem 0.2rem 0;
       box-sizing: border-box;
       overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      touch-action: none;
     }
     .messsage-item {
       // border: 1px solid red;
-      height: 0.5rem;
+      height: 100%;
       clear: both;
+      overflow: hidden;
+      margin-top: 0.1rem;
+      .message-date {
+        margin-bottom: 0.1rem;
+        text-align: center;
+        color: #999;
+      }
       .picture {
         width: 0.4rem;
         height: 0.4rem;

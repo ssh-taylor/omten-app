@@ -9,7 +9,7 @@
             <p>黄潇潇</p>
           </div>
           <div class="right">
-            <img class="portrait" src="../../assets/logo.png" alt="">
+            <img class="portrait" :src="HeadIcon" alt="">
           </div>
         </div>
       <div class="code">
@@ -63,9 +63,21 @@
 import { Button } from 'mint-ui';
 export default {
   components:{
-    MtButton:Button
+    MtButton:Button,
+  },
+  data(){
+    return{
+      HeadIcon:'',
+    }
+  },
+  mounted(){
+    this.init()
   },
   methods:{
+    init(){
+      this.HeadIcon = this.$store.getters.userico
+      console.log(this.HeadIcon)
+    },
     loginout(){
       this.$store.dispatch('LoginOut')
       this.$router.replace({path:'/login'})
@@ -110,9 +122,9 @@ export default {
          top: .2rem;
          right: .3rem;
          .portrait{
-           width: .3rem!important;
-           height: .3rem;
-           border-radius: 50%;
+           width: .4rem!important;
+           height: .4rem;
+           border-radius: .05rem;
            display: block;
          }
        }
