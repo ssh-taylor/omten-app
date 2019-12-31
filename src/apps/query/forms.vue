@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-25 10:45:02
- * @LastEditTime : 2019-12-26 20:39:14
+ * @LastEditTime : 2019-12-27 19:04:27
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\query\forms.vue
@@ -54,5 +54,10 @@ export default {
 <style type="text/scss" lang="scss" scoped>
 .page-forms {
   font-size: 0.16rem;
+  height: 100%;
+  .container{
+    height: calc(100% - .4rem);
+    overflow-y: scroll;
+  }
 }
 </style>

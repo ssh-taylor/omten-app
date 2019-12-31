@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-23 11:02:10
- * @LastEditTime : 2019-12-26 20:40:39
+ * @LastEditTime : 2019-12-30 17:05:56
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\query\formlist.vue
@@ -75,6 +75,7 @@ export default {
   methods: {
     init() {
       this.order = session.getSession('order')
+      // this.order.F_ModuleId
       getFormScheme(this.order.F_ModuleId).then(res => {
         this.orderModle = JSON.parse(res.F_Scheme);
         getinstancelist(this.order.F_ModuleId).then(data => {
