@@ -9,7 +9,7 @@
 <template>
   <div class="page-formshow">
     <template v-for="(item,index) in formseche">
-      <formshow v-if="item.type!=='tabs'" :element="item" :formdata="formdata" :key="index"></formshow>
+      <formshow v-if="item.type!=='tabs'" :element="item" :formdata="formdata" :key="index" :mode="mode"></formshow>
     </template>
   </div>
 </template>
@@ -28,6 +28,10 @@ export default {
     formdata: {
       type:Object,
       default:{}
+    },
+    mode:{
+      type:String,
+      default:'edit'
     }
   }
 };

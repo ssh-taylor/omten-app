@@ -12,6 +12,7 @@ const getters ={
     token:state=>state.app.token,
     userInfo:state=>state.app.userInfo,
     menus: state => state.app.menus,
+    department:state=>state.app.departmentList,
     userico:state=>{
         return(
             settings.apiUrl + '/learun/adms/user/img?token=' +

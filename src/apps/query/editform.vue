@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-26 10:55:54
- * @LastEditTime : 2019-12-26 20:41:47
+ * @LastEditTime : 2020-01-10 17:09:15
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\query\editform.vue
@@ -15,7 +15,7 @@
       <mt-button slot="right">保存</mt-button>
     </mt-header>
     <div class="container">
-      <formshow :formseche="formseche" :formdata="formdata"></formshow>  
+      <formshow :formseche="formseche" :formdata="formdata" :mode="mode"></formshow>  
     </div>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
         title:'',
         formseche:[],
         formdata:{},
+        mode:'edit'
     };
   },
   mounted(){
@@ -55,5 +56,12 @@ export default {
 
 <style type="text/scss" lang="scss" scoped>
 .page-editform {
+   font-size: 0.16rem;
+  height: 100%;
+  .container{
+    height: calc(100% - .4rem);
+    overflow-y: scroll;
+    background-color: #fff;
+  }
 }
 </style>

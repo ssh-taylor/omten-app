@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-27 16:19:04
- * @LastEditTime : 2019-12-30 18:35:57
+ * @LastEditTime : 2020-01-04 19:30:13
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\commons\form\control\dialogselect.vue
@@ -10,14 +10,8 @@
   <div class="select">
     <span class="label">{{element.title}}</span>
     <div class="content">
-         <!-- <input class="input" type="text" v-model="value"  list="selectoption"/>
-         <datalist id="selectoption">
-             <option>选项1</option>
-             <option>选项2</option>
-         </datalist> -->
-         <select class="input" name="" id="">
-             <option value="1">选项1</option>
-             <option value="2">选项2</option>
+         <select class="input" :class="disabled === true?'view':'edit'" v-model="currentValue" @change="handleclick(currentValue)" :disabled="disabled">
+             <option :value="item.value" v-for="(item,index) in datasource" :key="index">{{item.title}}</option>
          </select>
     </div>
   </div>
@@ -26,16 +20,50 @@
 <script>
 export default {
   props:{
-      element:Object
+      element:{
+        type:Object,
+        default:{}
+      },
+      value:[String,Number],
+      disabled:{
+        type:Boolean,
+        default:false
+      }
   },
   data(){
     return{
-        value:''
+      currentValue:this.multiple?(this.value?this.value.split(","):[]):this.value,
+      datasource: []
     }
   },
+  created(){
+    this.init()
+    console.log(this.value,'select')
+  },
   methods:{
-    open(){
-      
+    init(){
+      if (this.element.dftype === "custom") {
+        this.datasource = this.element.items;
+        return;
+      }
+      if (this.element.dftype === "data") {
+        store.getdatabysourceset(this.element.sourceset, data => {
+          this.datasource = data;
+        });
+        return;
+      }
+      if (this.element.dftype === "link") {
+        store.getdatabydongset(this.element.dongset, data => {
+          this.datasource = data;
+        });
+        return;
+      }
+      this.datasource = [];
+    },
+    handleclick(val) {
+      // if (this.multiple) this.$emit("input", this.currentValue.join(","));else
+       this.$emit("input", this.currentValue);
+      this.$emit("change", val);
     }
   }
 };
@@ -52,6 +80,7 @@ export default {
 .select .label{
     line-height: .4rem;
     text-align: center;
+    width: 20%;
 }
 .select .content {
   line-height: 0.4rem;
@@ -63,14 +92,25 @@ export default {
 }
 .content > .input {
   outline: none;
-  height: 0.25rem;
   width: 100%;
   padding: 0;
+  padding-left:.05rem; 
   font-size: 0.17rem;
   display: block;
   box-sizing: border-box;
-   border: #1e90ff 1px dashed;
-   padding: 0 0 0 .05rem;
-   color: #444;
+  color: #444;
+  border: none;
+  background-color: #fff;
+}
+.edit{
+  height: 0.25rem;
+   border: #1e90ff 1px dashed!important;
+}
+.view{
+  height: .3rem;
+ border-bottom: 1px solid #999!important;
+ appearance:none; 
+ -webkit-appearance:none;
+ -moz-appearance:none;
 }
 </style>

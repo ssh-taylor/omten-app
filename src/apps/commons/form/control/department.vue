@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-27 17:55:49
- * @LastEditTime : 2019-12-30 18:33:51
+ * @LastEditTime : 2020-01-09 21:25:33
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\commons\form\control\input.vue
@@ -10,7 +10,7 @@
   <div class="until-department">
     <span class="label">{{element.title}}</span>
     <div class="content">
-      <input class="input" type="text" v-model="value" readonly="true" @focus="open" @onchange="handlechange"/>
+      <input class="input" :class="disabled===true?'view':'edit'" :disabled="disabled" type="text" v-model="currentvalue" readonly  @focus="open" @change="handlechange"/>
     </div>
     <mt-popup v-model="popupVisible" position="bottom" style="width:100%">
       <div class="select-content">
@@ -18,7 +18,7 @@
           <span class="abrogate" @click="close=>popupVisible=false">取消</span>
           <span class="confirm" @click="sure()">确定</span>
         </div>
-        <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+        <mt-picker :slots="slots" value-key="F_FullName" @change="onValuesChange"></mt-picker>
       </div>
     </mt-popup>
   </div>
@@ -26,7 +26,6 @@
 
 <script>
 import { Popup, Picker } from "mint-ui";
-import { getDepartment } from "@/Api/department";
 export default {
   components: {
     MtPopup: Popup,
@@ -37,42 +36,54 @@ export default {
       type: Object,
       default: {}
     },
-    // value: [String, Number],
+    value: [String, Number],
+    disabled:{
+      type:Boolean,
+      default:false,
+    }
   },
   data() {
     return {
       popupVisible: false,
-      value: "",
+      currentvalue:'',
       selectVal:'',
       slots: [
         {
           flex: 1,
-          values: [],
-          className: "slot3",
+          values:this.$store.getters.department,
+          className: "slot1",
           textAlign: "center"
         }
       ]
     };
   },
+  watch:{
+    value(newval){
+      this.handlechange(newval)
+    }
+  },
+  created(){
+    this.init()
+  },
   methods: {
+    init(){
+      if(this.value!==''){
+        this.currentvalue = this.$store.getters.department.find(item=>{return item.F_DepartmentId == this.value}).F_FullName
+      }
+    },
     open() {
       this.popupVisible = true;
-      getDepartment().then(data => {
-        this.slots[0].values = [];
-        data.forEach(element => {
-          this.slots[0].values.push(element.F_FullName);
-        });
-      });
     },
     onValuesChange(picker, values) {
-        this.selectVal = values
+        this.selectVal = values[0]
     },
     sure(){
-      this.value = this.selectVal
+      this.currentvalue = this.selectVal.F_FullName
+      console.log(this.selectVal)
       this.popupVisible = false
     },
     handlechange(val){
-       console.log(document.querySelector('.input'))
+       this.$emit('change',val)
     }
   }
 };
@@ -89,6 +100,7 @@ export default {
 .label {
   line-height: 0.4rem;
   text-align: center;
+  width: 20%;
 }
 .content {
   line-height: 0.4rem;
@@ -99,16 +111,25 @@ export default {
   flex-grow: 1;
 }
 .content > input {
-  outline: none;
-  height: 0.25rem;
+   outline: none;
   width: 100%;
-  padding: 0 0 0 0.1rem;
+  padding: 0;
+  padding-left: .05rem;
   font-size: 0.17rem;
   display: block;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  border: #1e90ff 1px dashed;
+   background-color: #fff;
+}
+.view{
+  border: none;
+  height: .3rem;
+  border-bottom:1px solid #999; 
+}
+.edit{
+  height: 0.25rem;
+ border: #1e90ff 1px dashed;
 }
 .nav-picker {
   position: relative;

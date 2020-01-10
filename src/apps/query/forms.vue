@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-25 10:45:02
- * @LastEditTime : 2019-12-27 19:04:27
+ * @LastEditTime : 2020-01-10 17:08:56
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\query\forms.vue
@@ -15,7 +15,7 @@
       <mt-button slot="right">保存</mt-button>
     </mt-header>
     <div class="container">
-      <formshow :formseche="formseche" :formdata="formdata"></formshow>  
+      <formshow :formseche="formseche" :formdata="formdata" :mode="mode"></formshow>  
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
     return {
       formseche:[],
       formdata:{},
+      mode:'view'
     };
   },
   mounted(){
@@ -58,6 +59,7 @@ export default {
   .container{
     height: calc(100% - .4rem);
     overflow-y: scroll;
+    background: #fff;
   }
 }
 </style>

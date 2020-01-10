@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-10 19:41:36
- * @LastEditTime : 2019-12-24 10:38:26
+ * @LastEditTime : 2020-01-04 21:15:44
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\commons\Login.vue
@@ -57,6 +57,8 @@ methods:{
         this.$store.dispatch('SaveUserInfo',res.baseinfo)
     }).then(msg => {
           this.$store.dispatch('SetMenu')
+      }).then(meg=>{
+        this.$store.dispatch('SetDepartment')
       }).then(meg=>{
       this.$store.dispatch('SetUserList').then(msg=>{
         this.$router.replace({path:'/'})

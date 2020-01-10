@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-23 11:02:10
- * @LastEditTime : 2019-12-30 17:05:56
+ * @LastEditTime : 2020-01-10 17:42:58
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\query\formlist.vue
@@ -10,10 +10,10 @@
 <template>
   <div class="page-formlist">
       <mt-header title="销售订单">
-        <div slot="left">
+        <div slot="left" @click="back">
           <mt-button class="iconfont" icon="back"></mt-button>
         </div>
-        <mt-button icon="more" slot="right" @click.native="openmore"></mt-button>
+        <!-- <mt-button icon="more" slot="right" @click.native="openmore"></mt-button> -->
       </mt-header>
     <div class="container">
       <div class="form-box" v-for="(item,index) in orderList" :key="index" data-type="0">
@@ -28,8 +28,8 @@
             <span class="creatName">{{item.f_createusername}}</span>
           </div>
           <div class="right">
-            <p class="editDate">{{item.f_modifydate.slice(0,10)}}</p>
-            <span class="editName">{{item.f_modifyusername}}</span>
+            <p class="editDate">{{item.f_modifydate===''?item.f_modifydate.slice(0,10):item.f_createdate.slice(0,10)}}</p>
+            <span class="noeditName" :class="{'editName':item.f_modifyusername!==null}">{{item.f_modifyusername===null?'暂无修改':item.f_modifyusername}}</span>
           </div>
         </div>
         <div class="delete" :data-index="index">
@@ -51,7 +51,7 @@
 <script>
 import { Header, button, Loadmore, Toast } from "mint-ui";
 import { getinstancelist, getFormScheme } from "../../Api/form";
-import {deleteinstanceform} from '../../Api/formdata'
+import {deleteinstanceform,getinstanceform} from '../../Api/formdata'
 import {seesion, session} from '../../utils/util'
 export default {
   components: {
@@ -75,9 +75,10 @@ export default {
   methods: {
     init() {
       this.order = session.getSession('order')
-      // this.order.F_ModuleId
       getFormScheme(this.order.F_ModuleId).then(res => {
         this.orderModle = JSON.parse(res.F_Scheme);
+        let SchemeId = this.orderModle.SchemeData.find(item=>{return item.type ==='gridtable'})
+        this.formdata(this.order.F_ModuleId,SchemeId.tabel)
         getinstancelist(this.order.F_ModuleId).then(data => {
           this.orderList = data.rows;
           data.rows.forEach(i => {
@@ -94,8 +95,8 @@ export default {
         params: { modle: this.orderModle, orderData: val }
       });
     },
-    open() {
-      console.log(1111);
+    back(){
+      this.$router.push({name:"home_query"})
     },
     openmore() {
       if (this.visibility === false) {
@@ -117,6 +118,12 @@ export default {
         this.restSlide();
         this.orderList.splice(index,1)
      })
+    },
+    formdata(schemeInfoId,keyValue){
+      getinstanceform(schemeInfoId,keyValue).then(data=>{
+        console.log(data,111)
+        session.setSession('couterformdata',data)
+      })
     },
     //滑动开始
     touchStart(e) {
@@ -229,9 +236,9 @@ export default {
         .editDate {
           color: #999;
         }
-        .editName {
+        .noeditName {
           font-size: 0.13rem;
-          color: #ff3030;
+          color: #999;
         }
         .editName::before {
           content: "修改";
