@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-09 14:17:20
- * @LastEditTime : 2020-01-10 17:51:39
+ * @LastEditTime : 2020-01-10 18:34:02
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\commons\form\control\table.vue
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import{session} from '@/utils/util'
 export default {
   props: {
     element: {
@@ -51,7 +52,14 @@ export default {
   },
   mounted() {
     let height = document.querySelector(".table-title").offsetHeight;
-      document.querySelector(".table-content").style.height = height+'px';
+    document.querySelector(".table-content").style.height = height+'px';
+    this.init()
+  },
+  methods:{
+    init(){
+      this.tabeldata = session.getSession('couterformdata')
+      console.log(this.tabeldata,'table')
+    }
   }
 };
 </script>

@@ -64,7 +64,6 @@ export default {
   },
   mounted(){
       let height = document.querySelector(".table-title").offsetHeight;
-      console.log(height,22222)
       document.querySelector(".table-content").style.height = height+'px';
   },
   methods: {

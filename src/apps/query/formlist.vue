@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-23 11:02:10
- * @LastEditTime : 2020-01-10 17:42:58
+ * @LastEditTime : 2020-01-10 18:33:23
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \omt-app\src\apps\query\formlist.vue
@@ -78,7 +78,6 @@ export default {
       getFormScheme(this.order.F_ModuleId).then(res => {
         this.orderModle = JSON.parse(res.F_Scheme);
         let SchemeId = this.orderModle.SchemeData.find(item=>{return item.type ==='gridtable'})
-        this.formdata(this.order.F_ModuleId,SchemeId.tabel)
         getinstancelist(this.order.F_ModuleId).then(data => {
           this.orderList = data.rows;
           data.rows.forEach(i => {
@@ -90,6 +89,7 @@ export default {
       });
     },
     tofrom(val) {
+      this.formdata(this.order.F_ModuleId,val.f_id)
       this.$router.push({
         name: "query_forms",
         params: { modle: this.orderModle, orderData: val }
@@ -109,21 +109,23 @@ export default {
       this.$router.push({name:'query_editform',params:{title:"新增表单",orderModle:this.orderModle,}})
     },
     edit(val) {
+      this.formdata(this.order.F_ModuleId,val.f_id)
       this.$router.push({name:'query_editform',params:{title:'修改表单',orderModle:this.orderModle,orderData:val}})
     },
     remove(e,val) {
      let index = e.currentTarget.parentElement.dataset.index
-     console.log(this.orderModle,val)
      deleteinstanceform(this.order.F_ModuleId,val.f_id).then(res=>{
         this.restSlide();
         this.orderList.splice(index,1)
      })
     },
     formdata(schemeInfoId,keyValue){
-      getinstanceform(schemeInfoId,keyValue).then(data=>{
-        console.log(data,111)
+      let forms = session.getSession('couterformdata')
+     if(forms.length===0){
+        getinstanceform(schemeInfoId,keyValue).then(data=>{
         session.setSession('couterformdata',data)
       })
+     }
     },
     //滑动开始
     touchStart(e) {
@@ -152,7 +154,6 @@ export default {
     //判断当前是否有滑块处于滑动状态
     checkSlide() {
       let listItems = document.querySelectorAll(".form-box");
-      console.log(listItems,1111)
       for (let i = 0; i < listItems.length; i++) {
         if (listItems[i].dataset.type == 1) {
           return true;
